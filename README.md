@@ -29,7 +29,8 @@ Prices: set `price: 18500` on a package to show "From $18,500"; leave `null` to 
 2. **Contact** — fill in `email` and `phone` in `data/site.mjs` (shown in the footer and used in search-engine data).
 3. **Domain** — set `siteUrl` (e.g. `https://rethinkrenovations.ca`) to generate canonical links and `sitemap.xml`.
 4. **Collections** — replace the draft inclusions and palettes with the final selections from the Founding Design Partner, and add the designer's profile on `src/pages/design-standards.mjs`.
-5. **Preview banner** — set `previewNotice` to `''` once collections are final.
+5. **Go live** — set `staging` to `false` in `data/site.mjs` (it hides the review copy from search engines and disables the form).
+6. **Preview banner** — set `previewNotice` to `''` once collections are final.
 
 ## Deploying on Vercel
 

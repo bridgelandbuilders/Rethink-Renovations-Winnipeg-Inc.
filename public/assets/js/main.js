@@ -96,6 +96,11 @@ document.querySelectorAll('.tier-switch').forEach((switcher) => {
     const endpoint = form.getAttribute('action');
     const button = form.querySelector('button[type="submit"]');
 
+    if (form.hasAttribute('data-staging')) {
+      setStatus('This is a design preview, so the form does not send yet. It will be connected before launch.', 'success');
+      return;
+    }
+
     if (!endpoint) {
       const to = form.dataset.email;
       if (!to) {

@@ -136,6 +136,7 @@ ${url ? `<link rel="canonical" href="${url}">\n<meta property="og:url" content="
 <meta property="og:description" content="${esc(description)}">
 ${site.siteUrl ? `<meta property="og:image" content="${site.siteUrl}/assets/img/logo-dark.png">` : ''}
 <meta name="theme-color" content="#16263a">
+${site.staging ? '<meta name="robots" content="noindex, nofollow">' : ''}
 <script>document.documentElement.classList.add('js')</script>
 <link rel="icon" type="image/png" href="/favicon.png">
 <link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.png">

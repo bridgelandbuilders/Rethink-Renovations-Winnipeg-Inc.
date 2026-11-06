@@ -25,7 +25,9 @@ for (const page of pages) {
   await writeFile(file, layout(page));
 }
 
-if (site.siteUrl) {
+if (site.staging) {
+  await writeFile(join(out, 'robots.txt'), 'User-agent: *\nDisallow: /\n');
+} else if (site.siteUrl) {
   const urls = pages
     .filter((p) => p.path !== '/404')
     .map((p) => `  <url><loc>${site.siteUrl}${p.path}</loc></url>`)

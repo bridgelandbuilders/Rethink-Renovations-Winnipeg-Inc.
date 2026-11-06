@@ -20,6 +20,10 @@ export const site = {
   // visitor's email app addressed to `email` above.
   formEndpoint: '',
 
+  // Review/staging copy: hides the site from search engines and shows a
+  // "design preview" message on the form. Set to false for the live site.
+  staging: true,
+
   // Shown site-wide while collections are being finalised. Set to '' at launch.
   previewNotice:
     'Our first collections are being finalised with our Founding Design Partner. Join the early list to see final selections and pricing first.',

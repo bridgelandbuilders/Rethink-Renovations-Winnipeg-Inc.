@@ -18,7 +18,7 @@ ${pageHero({
 
 <section class="section">
   <div class="wrap form-layout">
-    <form class="lead-form form-card" method="post" action="${esc(site.formEndpoint)}" data-email="${esc(site.email)}" novalidate>
+    <form class="lead-form form-card" method="post" action="${esc(site.formEndpoint)}" data-email="${esc(site.email)}"${site.staging ? ' data-staging' : ''} novalidate>
       <fieldset>
         <legend>Which rooms?</legend>
         <div class="choice-row">
