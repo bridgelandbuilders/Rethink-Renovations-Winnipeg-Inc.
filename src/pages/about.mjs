@@ -1,6 +1,6 @@
 import { comingNext } from '../../data/collections.mjs';
 import { esc, photo, pageHero } from '../layout.mjs';
-import { accessibilityDrawing } from '../hero-drawing.mjs';
+import { accessibilityDrawing } from '../drawings.mjs';
 
 export default function () {
   const tiles = comingNext
@@ -20,8 +20,8 @@ export default function () {
 ${pageHero({
   title: 'A different kind of renovation company',
   lede: 'Rethink Renovations Winnipeg Inc. treats a renovation less like a blank page and more like a well-designed product.',
-  img: 'team',
-  alt: 'Renovation crew and homeowner reviewing plans on a job site',
+  img: 'site-worker',
+  alt: 'Builder in a hard hat and safety vest on a construction site',
 })}
 
 <section class="section">

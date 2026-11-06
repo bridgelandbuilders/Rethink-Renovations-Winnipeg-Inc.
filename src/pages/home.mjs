@@ -1,7 +1,7 @@
 import { rooms, tiers, comingNext } from '../../data/collections.mjs';
 import { esc, swatches, photo } from '../layout.mjs';
 import { steps } from './how-it-works.mjs';
-import { heroDrawing, accessibilityDrawing } from '../hero-drawing.mjs';
+import { accessibilityDrawing } from '../drawings.mjs';
 
 export default function () {
   const head = tiers
@@ -81,18 +81,17 @@ export default function () {
       'Bathroom, kitchen and basement renovations in Winnipeg, offered as designed packages: Essential, Select and Signature. Know what is included before work begins.',
     bodyClass: 'page-home',
     body: `
-<section class="hero blueprint">
+<section class="hero">
+  ${photo('hero-site-team', '', { cls: 'hero-bg', eager: true })}
+  <div class="hero-shade blueprint-lines" aria-hidden="true"></div>
   <div class="wrap hero-inner">
-    <div class="hero-copy">
-      <h1 class="hero-title"><span>Renovation</span> <span>should be</span> <span>easier.</span></h1>
-      <div class="hero-measure" aria-hidden="true"><span class="dim-line dim-line-long"></span><span class="hero-measure-label">3 rooms &times; 3 collections</span></div>
-      <p class="lede">Bathroom, kitchen and basement renovations in Winnipeg, designed as packages. Pick a room, choose a collection, and know what you are getting before work begins.</p>
-      <div class="actions">
-        <a class="btn btn-bronze" href="/collections/">Explore the collections</a>
-        <a class="btn btn-outline-light" href="/get-started/">Join the early list</a>
-      </div>
+    <h1 class="hero-title"><span>Renovation</span> <span>should be</span> <span>easier.</span></h1>
+    <div class="hero-measure" aria-hidden="true"><span class="dim-line dim-line-long"></span><span class="hero-measure-label">3 rooms &times; 3 collections</span></div>
+    <p class="lede">Bathroom, kitchen and basement renovations in Winnipeg, designed as packages. Pick a room, choose a collection, and know what you are getting before work begins.</p>
+    <div class="actions">
+      <a class="btn btn-bronze" href="/collections/">Explore the collections</a>
+      <a class="btn btn-outline-light" href="/get-started/">Join the early list</a>
     </div>
-    ${heroDrawing()}
   </div>
 </section>
 

@@ -123,25 +123,3 @@ document.querySelectorAll('.tier-switch').forEach((switcher) => {
   });
 })();
 
-// Hero drawing: show the same kitchen in each collection
-(() => {
-  const fig = document.querySelector('.drawing');
-  if (!fig) return;
-  const buttons = [...fig.querySelectorAll('[data-tier-btn]')];
-  const order = buttons.map((b) => b.dataset.tierBtn);
-  const show = (id) => {
-    fig.dataset.tier = id;
-    buttons.forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.tierBtn === id)));
-  };
-  let timer = null;
-  const stop = () => { clearInterval(timer); timer = null; };
-  buttons.forEach((b) => b.addEventListener('click', () => { stop(); show(b.dataset.tierBtn); }));
-  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  if (!reduce) {
-    timer = setInterval(() => {
-      if (document.hidden) return;
-      show(order[(order.indexOf(fig.dataset.tier) + 1) % order.length]);
-    }, 3800);
-    fig.addEventListener('focusin', stop);
-  }
-})();
