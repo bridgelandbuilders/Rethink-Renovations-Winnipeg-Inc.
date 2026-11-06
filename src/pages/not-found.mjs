@@ -4,7 +4,7 @@ export default function () {
     title: 'Page not found',
     description: 'This page could not be found.',
     body: `
-<section class="page-hero">
+<section class="page-hero blueprint page-hero-solo">
   <div class="wrap">
     <h1>This page is not here</h1>
     <p class="lede">The link may be out of date. Start from the collections or the home page.</p>

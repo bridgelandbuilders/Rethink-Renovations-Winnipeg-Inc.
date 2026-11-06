@@ -1,6 +1,6 @@
 import { rooms, tiers } from '../../data/collections.mjs';
 import { site } from '../../data/site.mjs';
-import { esc } from '../layout.mjs';
+import { esc, pageHero } from '../layout.mjs';
 
 export default function () {
   return {
@@ -9,16 +9,16 @@ export default function () {
     description:
       'Join the Rethink Renovations early list or tell us about your Winnipeg bathroom, kitchen or basement project.',
     body: `
-<section class="page-hero">
-  <div class="wrap">
-    <h1>Get started</h1>
-    <p class="lede">Tell us about your project. We will follow up with final selections, pricing and available start dates as collections open.</p>
-  </div>
-</section>
+${pageHero({
+  title: 'Get started',
+  lede: 'Tell us about your project. We will follow up with final selections, pricing and available start dates as collections open.',
+  img: 'handover',
+  alt: 'Homeowner and contractor shaking hands beside a hard hat',
+})}
 
-<section class="section section-flush">
+<section class="section">
   <div class="wrap form-layout">
-    <form class="lead-form" method="post" action="${esc(site.formEndpoint)}" data-email="${esc(site.email)}" novalidate>
+    <form class="lead-form form-card" method="post" action="${esc(site.formEndpoint)}" data-email="${esc(site.email)}" novalidate>
       <fieldset>
         <legend>Which rooms?</legend>
         <div class="choice-row">

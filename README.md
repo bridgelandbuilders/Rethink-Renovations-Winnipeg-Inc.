@@ -19,6 +19,7 @@ npm run preview   # builds, then serves dist/ at http://localhost:3000
 | Header, footer, `<head>` tags | `src/layout.mjs` |
 | Styles / behaviour | `public/assets/css/styles.css`, `public/assets/js/main.js` |
 | Logo, favicon, fonts | `public/assets/img/`, `public/favicon.png`, `public/assets/fonts/` |
+| Photos | `public/assets/img/photos/` (add new ones to `PHOTO_SIZES` in `src/layout.mjs`) |
 
 Prices: set `price: 18500` on a package to show "From $18,500"; leave `null` to show "Pricing at launch".
 
@@ -33,5 +34,7 @@ Prices: set `price: 18500` on a package to show "From $18,500"; leave `null` to 
 ## Deploying on Vercel
 
 Import this repository in Vercel. `vercel.json` already sets the build command (`npm run build`) and output folder (`dist`). Any static host works the same way.
+
+Photos come from the Founding Design Partner proposal; confirm the stock licence covers website use, and swap in photos of completed Rethink projects as they become available.
 
 Fonts: Montserrat and Figtree, self-hosted under the SIL Open Font License (see `public/assets/fonts/`).

@@ -11,6 +11,37 @@ export const swatches = (palette, cls = 'swatches') =>
     .map((p) => `<li style="--c:${p.hex}"><span class="visually-hidden">${esc(p.name)}</span></li>`)
     .join('')}</ul>`;
 
+// Intrinsic sizes of the photos in public/assets/img/photos (prevents layout shift).
+const PHOTO_SIZES = {
+  'hero-renovation': [1800, 1200], bathroom: [800, 534], kitchen: [800, 534], 'basement-flooring': [1200, 800],
+  blueprints: [1200, 799], selections: [1200, 800], 'site-visit': [1200, 800], 'build-cabinets': [1200, 771],
+  handover: [1200, 800], designer: [1200, 801], team: [1800, 1200], 'site-scaffold': [1200, 800],
+  'plans-handshake': [1800, 1200], laundry: [1200, 900], mudroom: [1200, 788], 'home-office': [1095, 730],
+  'aging-in-place': [1200, 633], 'main-floor': [1120, 746],
+};
+
+export const photo = (name, alt = '', { cls = '', eager = false } = {}) => {
+  const [w, h] = PHOTO_SIZES[name] || [1200, 800];
+  return `<img src="/assets/img/photos/${name}.jpg" alt="${esc(alt)}" width="${w}" height="${h}"${
+    cls ? ` class="${cls}"` : ''
+  }${eager ? ' fetchpriority="high"' : ' loading="lazy"'} decoding="async">`;
+};
+
+// Navy blueprint page header with a framed photo on the right.
+export const pageHero = ({ title, lede, img, alt = '', crumb = '', extra = '' }) => `
+<section class="page-hero blueprint">
+  <div class="wrap page-hero-inner">
+    <div class="page-hero-copy">
+      ${crumb}
+      <h1>${title}</h1>
+      <span class="dim-line" aria-hidden="true"></span>
+      <p class="lede">${lede}</p>
+      ${extra}
+    </div>
+    <figure class="framed">${photo(img, alt, { eager: true })}</figure>
+  </div>
+</section>`;
+
 function header(path) {
   const links = nav
     .map((n) => {

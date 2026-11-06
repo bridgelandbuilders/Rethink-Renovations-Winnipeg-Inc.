@@ -25,6 +25,8 @@ export const tiers = [
 export const rooms = [
   {
     id: 'bathroom',
+    photo: 'bathroom',
+    photoAlt: 'Bright bathroom with a freestanding tub, marble-look wall and glass shower',
     name: 'Bathroom',
     plural: 'Bathrooms',
     intro:
@@ -105,6 +107,8 @@ export const rooms = [
   },
   {
     id: 'kitchen',
+    photo: 'kitchen',
+    photoAlt: 'White kitchen with a large island, pendant lights and wood flooring',
     name: 'Kitchen',
     plural: 'Kitchens',
     intro:
@@ -185,6 +189,8 @@ export const rooms = [
   },
   {
     id: 'basement',
+    photo: 'basement-flooring',
+    photoAlt: 'Installer fitting new plank flooring',
     name: 'Basement',
     plural: 'Basements',
     intro:
@@ -266,10 +272,10 @@ export const rooms = [
 ];
 
 export const comingNext = [
-  'Laundry rooms',
-  'Mudrooms',
-  'Main-floor renovations',
-  'Home offices',
-  'Accessibility packages',
-  'Aging-in-place packages',
+  { name: 'Laundry rooms', photo: 'laundry', alt: 'Laundry room with front-load washer and dryer and open shelving' },
+  { name: 'Mudrooms', photo: 'mudroom', alt: 'Mudroom with built-in bench, hooks and storage baskets' },
+  { name: 'Main-floor renovations', photo: 'main-floor', alt: 'Bright home entrance with tiled walkway' },
+  { name: 'Home offices', photo: 'home-office', alt: 'Home office with a wood desk and open shelving' },
+  { name: 'Accessibility packages', photo: null, alt: '' },
+  { name: 'Aging-in-place packages', photo: 'aging-in-place', alt: 'Older couple at a kitchen table with a laptop' },
 ];
