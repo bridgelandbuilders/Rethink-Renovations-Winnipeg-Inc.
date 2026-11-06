@@ -169,7 +169,7 @@ export const rooms = [
         price: null,
         palette: [
           { name: 'Navy cabinet', hex: '#22344a' },
-          { name: 'Rift oak island', hex: '#b08b62' },
+          { name: 'Rift oak uppers', hex: '#b08b62' },
           { name: 'Calacatta-look quartz', hex: '#efedea' },
           { name: 'Brushed brass', hex: '#b8955a' },
           { name: 'Engineered oak floor', hex: '#a17b55' },

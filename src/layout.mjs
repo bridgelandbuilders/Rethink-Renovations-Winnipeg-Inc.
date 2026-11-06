@@ -13,7 +13,7 @@ export const swatches = (palette, cls = 'swatches') =>
 
 // Intrinsic sizes of the photos in public/assets/img/photos (prevents layout shift).
 const PHOTO_SIZES = {
-  'hero-renovation': [1800, 1200], bathroom: [800, 534], kitchen: [800, 534], 'basement-flooring': [1200, 800],
+  bathroom: [800, 534], kitchen: [800, 534], 'basement-flooring': [1200, 800],
   blueprints: [1200, 799], selections: [1200, 800], 'site-visit': [1200, 800], 'build-cabinets': [1200, 771],
   handover: [1200, 800], designer: [1200, 801], team: [1800, 1200], 'site-scaffold': [1200, 800],
   'plans-handshake': [1800, 1200], laundry: [1200, 900], mudroom: [1200, 788], 'home-office': [1095, 730],

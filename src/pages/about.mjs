@@ -1,12 +1,13 @@
 import { comingNext } from '../../data/collections.mjs';
 import { esc, photo, pageHero } from '../layout.mjs';
+import { accessibilityDrawing } from '../hero-drawing.mjs';
 
 export default function () {
   const tiles = comingNext
     .map((c) =>
       c.photo
         ? `<li class="tile">${photo(c.photo, c.alt)}<span>${esc(c.name)}</span></li>`
-        : `<li class="tile tile-plain"><span>${esc(c.name)}</span></li>`
+        : `<li class="tile tile-plain">${accessibilityDrawing()}<span>${esc(c.name)}</span></li>`
     )
     .join('');
 
