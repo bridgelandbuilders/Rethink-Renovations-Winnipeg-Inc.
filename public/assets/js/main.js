@@ -123,3 +123,73 @@ document.querySelectorAll('.tier-switch').forEach((switcher) => {
   });
 })();
 
+
+// Header shadow once the page scrolls
+(() => {
+  const header = document.querySelector('.site-header');
+  if (!header) return;
+  const update = () => header.classList.toggle('is-scrolled', window.scrollY > 8);
+  update();
+  window.addEventListener('scroll', update, { passive: true });
+})();
+
+// Scroll reveals, ruler and frame drawing, timeline progress
+(() => {
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (reduce || !('IntersectionObserver' in window)) return;
+  document.documentElement.classList.add('motion');
+
+  // Elements that fade and rise in; siblings are staggered slightly.
+  const REVEAL = [
+    '.section-head', '.room-card', '.step-card', '.tile', '.cmp-row', '.framed', '.collage-inset',
+    '.room-feature-copy', '.timeline-copy', '.timeline-media', '.callout', '.def-list > div',
+    '.check-list li', '.standards-board > div', '.spec-sheet', '.compare-wrap', '.palettes',
+    '.form-card', '.form-aside', '.cta-inner', '.tier-key > div', '.partner > *', '.matrix-note',
+  ].join(',');
+  // Elements that only need to know they are in view (rulers, frames, markers).
+  const MARK = ['.ruler', '.dim-line', '.framed', '.room-feature-media', '.cmp-row', '.timeline-step'].join(',');
+
+  const reveal = [...document.querySelectorAll(REVEAL)].filter((el) => !el.closest('.hero'));
+  reveal.forEach((el) => {
+    const siblings = [...el.parentElement.children].filter((c) => c.matches(REVEAL));
+    const i = Math.min(siblings.indexOf(el), 5);
+    el.style.setProperty('--d', `${i * 80}ms`);
+    el.setAttribute('data-reveal', '');
+  });
+  const marks = [...document.querySelectorAll(MARK)].filter((el) => !el.closest('.hero'));
+
+  const io = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        const el = entry.target;
+        el.classList.add('is-in');
+        io.unobserve(el);
+        if (el.hasAttribute('data-reveal')) {
+          // Hand the element back to its normal hover styles once it has arrived.
+          const delay = parseInt(el.style.getPropertyValue('--d'), 10) || 0;
+          setTimeout(() => { el.removeAttribute('data-reveal'); el.style.removeProperty('--d'); }, 900 + delay);
+        }
+      });
+    },
+    { rootMargin: '0px 0px -8% 0px', threshold: 0.12 }
+  );
+  new Set([...reveal, ...marks]).forEach((el) => io.observe(el));
+
+  // How it works: draw the dashed timeline as the reader moves down it
+  const timeline = document.querySelector('.timeline');
+  if (timeline) {
+    let ticking = false;
+    const draw = () => {
+      ticking = false;
+      if (!timeline.offsetParent) return;
+      const r = timeline.getBoundingClientRect();
+      const p = Math.min(1, Math.max(0, (window.innerHeight * 0.75 - r.top) / r.height));
+      timeline.style.setProperty('--p', p.toFixed(3));
+    };
+    const onScroll = () => { if (!ticking) { ticking = true; requestAnimationFrame(draw); } };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('hashchange', () => setTimeout(draw, 50));
+    draw();
+  }
+})();

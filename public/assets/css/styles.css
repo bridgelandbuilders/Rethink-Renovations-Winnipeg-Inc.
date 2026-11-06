@@ -179,8 +179,12 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
 
 .site-nav { display: flex; align-items: center; gap: 1.75rem; }
 .site-nav ul { display: flex; gap: 1.6rem; list-style: none; margin: 0; padding: 0; }
-.site-nav ul a { text-decoration: none; font-weight: 600; font-size: 0.975rem; padding: 0.4rem 0; border-bottom: 2px solid transparent; }
-.site-nav ul a:hover, .site-nav ul a[aria-current='page'] { border-bottom-color: var(--bronze); }
+.site-nav ul a { position: relative; text-decoration: none; font-weight: 600; font-size: 0.975rem; padding: 0.4rem 0; }
+.site-nav ul a::after {
+  content: ''; position: absolute; left: 0; right: 0; bottom: 0; height: 2px; background: var(--bronze);
+  transform: scaleX(0); transform-origin: right; transition: transform 0.35s var(--ease);
+}
+.site-nav ul a:hover::after, .site-nav ul a[aria-current='page']::after { transform: scaleX(1); transform-origin: left; }
 
 .nav-toggle {
   display: none; font: 700 0.95rem var(--font-display);
@@ -199,6 +203,7 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
   .js .site-nav.is-open { display: flex; }
   .site-nav ul { flex-direction: column; gap: 0; }
   .site-nav ul a { display: block; padding: 0.85rem 0; border-bottom: 1px solid var(--line); }
+  .site-nav ul a::after { display: none; }
   html:not(.js) .header-inner { flex-wrap: wrap; padding-block: 0.75rem; }
   html:not(.js) .site-nav ul { flex-direction: row; flex-wrap: wrap; gap: 1rem; }
   html:not(.js) .site-nav ul a { border-bottom: 0; padding: 0.25rem 0; }
@@ -415,17 +420,6 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
     linear-gradient(90deg, rgba(255, 255, 255, 0.06) 1px, transparent 1px);
   background-size: 24px 24px;
 }
-.plan-svg { position: absolute; inset: 0; width: 100%; height: 100%; padding: 0.75rem 0.75rem 2.75rem; }
-.plan-wall { fill: none; stroke: var(--white); stroke-width: 4; stroke-linejoin: miter; }
-.plan-door { fill: none; stroke: rgba(255, 255, 255, 0.7); stroke-width: 1.2; stroke-dasharray: 3 3; }
-.plan-fix { fill: rgba(255, 255, 255, 0.08); stroke: rgba(255, 255, 255, 0.85); stroke-width: 1.2; }
-.plan-shower { fill: rgba(201, 160, 106, 0.14); stroke: rgba(255, 255, 255, 0.5); stroke-width: 1; stroke-dasharray: 2 3; }
-.plan-drain { stroke: rgba(255, 255, 255, 0.75); stroke-width: 3; stroke-dasharray: 1 3; }
-.plan-bar { stroke: var(--bronze); stroke-width: 4; stroke-linecap: round; fill: none; }
-.plan-turn { fill: rgba(174, 129, 72, 0.12); stroke: var(--bronze-light); stroke-width: 1.5; stroke-dasharray: 6 4; }
-.plan-dim { stroke: var(--bronze-light); stroke-width: 1.2; }
-.plan-text { fill: var(--bronze-light); font: 600 9.5px var(--font-display); text-anchor: middle; }
-.plan-text-sm { font-size: 8.5px; fill: rgba(255, 255, 255, 0.75); }
 @media (max-width: 860px) { .tiles { grid-template-columns: 1fr 1fr; } }
 @media (max-width: 480px) { .tiles { grid-template-columns: 1fr; } }
 
@@ -659,6 +653,87 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
 .footer-base { border-top: 1px solid rgba(255, 255, 255, 0.12); margin-top: 3rem; padding-block: 1.25rem; font-size: 0.875rem; }
 .footer-base p { margin: 0; }
 @media (max-width: 760px) { .footer-grid { grid-template-columns: 1fr 1fr; } .footer-brand { grid-column: 1 / -1; } }
+
+
+/* Motion and interaction --------------------------------------------------- */
+
+/* Header settles once the page scrolls */
+.site-header { transition: box-shadow 0.3s var(--ease), background-color 0.3s; }
+.site-header.is-scrolled { box-shadow: 0 10px 30px -18px rgba(14, 24, 38, 0.45); background: rgba(250, 250, 248, 0.98); }
+
+/* Bronze buttons: a light sweep on hover */
+.btn-bronze, .btn-primary { position: relative; overflow: hidden; isolation: isolate; }
+.btn-bronze::after, .btn-primary::after {
+  content: ''; position: absolute; inset: 0; z-index: -1;
+  background: linear-gradient(110deg, transparent 30%, rgba(255, 255, 255, 0.35) 50%, transparent 70%);
+  transform: translateX(-120%); transition: transform 0.7s var(--ease);
+}
+.btn-primary::after { background: linear-gradient(110deg, transparent 30%, rgba(255, 255, 255, 0.14) 50%, transparent 70%); }
+.btn-bronze:hover::after, .btn-primary:hover::after { transform: translateX(120%); }
+.btn:hover { transform: translateY(-2px); }
+.btn:active { transform: translateY(0); }
+
+/* Swatches: the hovered material widens, like pulling a sample from a board */
+.swatches li { transition: flex-grow 0.4s var(--ease); }
+.m-cell .swatches li:hover, .tier-links .swatches li:hover, .compare .swatches li:hover, .standards-board .swatches li:hover { flex-grow: 2.4; }
+.m-cell .swatches { transition: transform 0.35s var(--ease); }
+.m-cell:hover .swatches { transform: translateY(-3px); }
+
+/* Cards */
+.step-card { transition: transform 0.4s var(--ease), border-color 0.4s, background-color 0.4s; }
+.step-card:hover { transform: translateY(-6px); border-color: rgba(174, 129, 72, 0.8); background: rgba(255, 255, 255, 0.07); }
+.step-media { overflow: hidden; }
+.step-media img, .tile img, .timeline-media img, .room-feature-media img, .framed img { transition: transform 0.8s var(--ease); }
+.step-card:hover .step-media img, .tile:hover img { transform: scale(1.06); }
+.step-num { transition: padding 0.35s var(--ease); }
+.step-card:hover .step-num { padding-right: 1.4rem; }
+.tile span { transition: padding 0.35s var(--ease), background-color 0.35s; }
+.tile:hover span { padding-right: 1.6rem; background: var(--slate); }
+.room-feature-media, .timeline-media, .framed { overflow: visible; }
+.room-feature-media:hover img, .timeline-media:hover img { transform: scale(1.03); }
+.room-card-tiers span { transition: background-color 0.3s, border-color 0.3s, color 0.3s; }
+.room-card:hover .room-card-tiers span { border-color: var(--bronze); }
+.room-card-tiers span:hover { background: var(--bronze); color: var(--ink-deep); }
+.compare tbody tr { transition: background-color 0.2s; }
+.compare tbody tr:hover td { background: #faf7f1; }
+.callout, .form-card { transition: transform 0.4s var(--ease), box-shadow 0.4s var(--ease); }
+.callout:hover { transform: translateY(-4px); box-shadow: 0 40px 70px -30px rgba(14, 24, 38, 0.5); }
+.site-footer a { background: linear-gradient(var(--bronze), var(--bronze)) left bottom / 0 1px no-repeat; transition: background-size 0.3s var(--ease), color 0.2s; }
+.site-footer a:hover { background-size: 100% 1px; text-decoration: none; }
+
+@media (prefers-reduced-motion: no-preference) {
+  /* Hero photo settles in slowly */
+  .hero-bg { animation: settle 2.4s var(--ease) both; }
+  @keyframes settle { from { transform: scale(1.08); } to { transform: scale(1); } }
+
+  /* Scroll reveals (classes added by main.js only when supported) */
+  .motion [data-reveal] {
+    opacity: 0; transform: translateY(22px);
+    transition: opacity 0.8s var(--ease), transform 0.8s var(--ease);
+    transition-delay: var(--d, 0ms);
+  }
+  .motion [data-reveal].is-in { opacity: 1; transform: none; }
+
+  /* Rulers measure out from the left */
+  .motion .ruler { transform: scaleX(0); transform-origin: left; transition: transform 1s var(--ease) 0.15s; }
+  .motion .ruler.is-in { transform: scaleX(1); }
+  .motion .dim-line:not(.hero-measure .dim-line) { transform: scaleX(0); transform-origin: left; transition: transform 0.9s var(--ease) 0.2s; }
+  .motion .dim-line.is-in { transform: scaleX(1); }
+
+  /* Drafting frames slide into their offset */
+  .motion .framed::before, .motion .room-feature-media::before { transform: translate(0, 0); transition: transform 1s var(--ease) 0.25s; }
+  .motion .framed.is-in::before, .motion .room-feature-media.is-in::before { transform: translate(1.25rem, 1.25rem); }
+  .motion .framed-left.is-in::before, .motion .room-feature:nth-child(even) .room-feature-media.is-in::before { transform: translate(-1.25rem, 1.25rem); }
+
+  /* Comparison: the bronze marker grows in */
+  .motion .cmp-new { border-left-color: transparent; background: linear-gradient(var(--bronze), var(--bronze)) left top / 3px 0 no-repeat; transition: background-size 0.8s var(--ease) 0.3s; }
+  .motion .cmp-row.is-in .cmp-new { background-size: 3px 100%; }
+
+  /* Timeline: the dashed line draws as you scroll */
+  .motion .timeline::before { transform: scaleY(var(--p, 0)); transform-origin: top; }
+  .motion .timeline-num { transform: scale(0.6); opacity: 0; transition: transform 0.6s var(--ease), opacity 0.6s; }
+  .motion .timeline-step.is-in .timeline-num { transform: none; opacity: 1; }
+}
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { transition: none !important; animation: none !important; scroll-behavior: auto !important; }

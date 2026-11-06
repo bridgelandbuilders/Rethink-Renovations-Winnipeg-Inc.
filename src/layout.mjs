@@ -17,7 +17,7 @@ const PHOTO_SIZES = {
   blueprints: [1200, 799], selections: [1200, 800], 'site-visit': [1200, 800], 'build-cabinets': [1200, 771],
   handover: [1200, 800], designer: [1200, 801], 'hero-site-team': [2000, 1333], 'site-worker': [1200, 800], 'site-scaffold': [1200, 800],
   'plans-handshake': [1800, 1200], laundry: [1200, 900], mudroom: [1200, 788], 'home-office': [1095, 730],
-  'aging-in-place': [1200, 633], 'main-floor': [1120, 746],
+  'aging-in-place': [1200, 633], 'main-floor': [1120, 746], 'home-exterior': [1182, 788],
 };
 
 export const photo = (name, alt = '', { cls = '', eager = false } = {}) => {

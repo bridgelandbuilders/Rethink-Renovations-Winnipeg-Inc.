@@ -1,7 +1,6 @@
 import { rooms, tiers, comingNext } from '../../data/collections.mjs';
 import { esc, swatches, photo } from '../layout.mjs';
 import { steps } from './how-it-works.mjs';
-import { accessibilityDrawing } from '../drawings.mjs';
 
 export default function () {
   const head = tiers
@@ -70,7 +69,7 @@ export default function () {
     .map((c) =>
       c.photo
         ? `<li class="tile">${photo(c.photo, c.alt)}<span>${esc(c.name)}</span></li>`
-        : `<li class="tile tile-plain">${accessibilityDrawing()}<span>${esc(c.name)}</span></li>`
+        : `<li class="tile tile-plain"><span>${esc(c.name)}</span></li>`
     )
     .join('');
 

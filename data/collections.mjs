@@ -274,8 +274,8 @@ export const rooms = [
 export const comingNext = [
   { name: 'Laundry rooms', photo: 'laundry', alt: 'Laundry room with front-load washer and dryer and open shelving' },
   { name: 'Mudrooms', photo: 'mudroom', alt: 'Mudroom with built-in bench, hooks and storage baskets' },
-  { name: 'Main-floor renovations', photo: 'main-floor', alt: 'Bright home entrance with tiled walkway' },
+  { name: 'Main-floor renovations', photo: 'home-exterior', alt: 'Modern two-storey home with an open main floor and covered patio' },
   { name: 'Home offices', photo: 'home-office', alt: 'Home office with a wood desk and open shelving' },
-  { name: 'Accessibility packages', photo: null, alt: '' },
+  { name: 'Accessibility packages', photo: 'main-floor', alt: 'Step-free entrance with a level tiled walkway and wide double doors' },
   { name: 'Aging-in-place packages', photo: 'aging-in-place', alt: 'Older couple at a kitchen table with a laptop' },
 ];
