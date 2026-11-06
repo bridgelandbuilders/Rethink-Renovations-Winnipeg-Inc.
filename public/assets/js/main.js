@@ -40,11 +40,9 @@ document.documentElement.classList.add('js');
 })();
 
 // Room page: collection switcher on small screens
-(() => {
-  const switcher = document.querySelector('.tier-switch');
-  if (!switcher) return;
+document.querySelectorAll('.tier-switch').forEach((switcher) => {
   switcher.hidden = false;
-  const targets = document.querySelectorAll('[data-active]');
+  const targets = switcher.parentElement.querySelectorAll('[data-active]');
   const buttons = [...switcher.querySelectorAll('button')];
   const show = (id) => {
     targets.forEach((t) => (t.dataset.active = id));
@@ -53,7 +51,7 @@ document.documentElement.classList.add('js');
   buttons.forEach((b) => b.addEventListener('click', () => show(b.dataset.show)));
   const fromHash = location.hash.slice(1);
   if (buttons.some((b) => b.dataset.show === fromHash)) show(fromHash);
-})();
+});
 
 // Get started form
 (() => {
