@@ -1,0 +1,157 @@
+import { rooms, tiers } from '../../data/collections.mjs';
+import { esc, swatches, priceLabel } from '../layout.mjs';
+
+function overview() {
+  const cards = rooms
+    .map(
+      (r) => `
+    <article class="room-row">
+      <div class="room-row-copy">
+        <h2><a href="/collections/${r.id}/">${r.name}</a></h2>
+        <p>${esc(r.intro)}</p>
+        <p class="muted">${esc(r.goodFor)}</p>
+      </div>
+      <ul class="room-row-tiers">
+        ${tiers
+          .map(
+            (t) => `<li><a href="/collections/${r.id}/#${t.id}">${swatches(r.packages[t.id].palette)}<span>${t.name}</span></a></li>`
+          )
+          .join('')}
+      </ul>
+    </article>`
+    )
+    .join('');
+
+  return {
+    path: '/collections/',
+    title: 'Collections',
+    description:
+      'Bathroom, kitchen and basement renovation collections in Winnipeg. Each room comes in three collections: Essential, Select and Signature.',
+    body: `
+<section class="page-hero">
+  <div class="wrap">
+    <h1>Collections</h1>
+    <p class="lede">Each room comes in three collections. The difference is in the materials, the details and how much the layout can change.</p>
+  </div>
+</section>
+
+<section class="section section-flush">
+  <div class="wrap">
+    <dl class="tier-key">
+      ${tiers.map((t) => `<div><dt>${t.name}</dt><dd>${esc(t.summary)}</dd></div>`).join('')}
+    </dl>
+    ${cards}
+  </div>
+</section>
+
+<section class="cta-band">
+  <div class="wrap">
+    <h2>Not sure which collection fits?</h2>
+    <p>Tell us about your space and budget, and we will point you to the right starting point.</p>
+    <a class="btn btn-bronze" href="/get-started/">Get started</a>
+  </div>
+</section>`,
+  };
+}
+
+function roomPage(r) {
+  const headCells = tiers
+    .map((t) => {
+      const pkg = r.packages[t.id];
+      return `<th scope="col" id="${t.id}" data-col="${t.id}">
+        <span class="t-name">${t.name}</span>
+        <span class="t-price">${priceLabel(pkg.price)}</span>
+        ${swatches(pkg.palette, 'swatches swatches-lg')}
+      </th>`;
+    })
+    .join('');
+
+  const bodyRows = r.categories
+    .map(
+      (cat, i) => `<tr><th scope="row">${esc(cat)}</th>${tiers
+        .map((t) => `<td data-col="${t.id}">${esc(r.packages[t.id].includes[i])}</td>`)
+        .join('')}</tr>`
+    )
+    .join('');
+
+  const paletteNames = tiers
+    .map(
+      (t) => `<div class="palette-list" data-col="${t.id}">
+      <h3>${t.name} palette</h3>
+      <ul>${r.packages[t.id].palette
+        .map((p) => `<li><span class="chip" style="--c:${p.hex}"></span>${esc(p.name)}</li>`)
+        .join('')}</ul>
+    </div>`
+    )
+    .join('');
+
+  const others = rooms.filter((o) => o.id !== r.id);
+
+  return {
+    path: `/collections/${r.id}/`,
+    title: `${r.name} renovation collections`,
+    description: `${r.name} renovations in Winnipeg in three collections: Essential, Select and Signature. Compare what is included in each.`,
+    body: `
+<section class="page-hero">
+  <div class="wrap">
+    <p class="crumb"><a href="/collections/">Collections</a></p>
+    <h1>${r.name}</h1>
+    <p class="lede">${esc(r.intro)}</p>
+    <p class="muted">${esc(r.goodFor)}</p>
+  </div>
+</section>
+
+<section class="section section-flush">
+  <div class="wrap">
+    <div class="tier-switch" role="tablist" aria-label="Show collection" hidden>
+      ${tiers.map((t, i) => `<button type="button" role="tab" data-show="${t.id}" aria-selected="${i === 0}">${t.name}</button>`).join('')}
+    </div>
+    <div class="compare-wrap" data-active="essential">
+      <table class="compare">
+        <caption class="visually-hidden">What each ${r.name.toLowerCase()} collection includes</caption>
+        <thead><tr><td></td>${headCells}</tr></thead>
+        <tbody>${bodyRows}</tbody>
+      </table>
+    </div>
+    <div class="palettes" data-active="essential">${paletteNames}</div>
+    <p class="matrix-note">Palettes and inclusions are illustrative while collections are finalised with our design partner. Final selections may change.</p>
+  </div>
+</section>
+
+<section class="section section-tint">
+  <div class="wrap split">
+    <div>
+      <h2>What affects your final price</h2>
+      <ul class="plain-list">
+        <li>The size of the room</li>
+        <li>What we find behind walls and under floors</li>
+        <li>Plumbing or electrical changes beyond the package</li>
+        <li>Any personal upgrades you add</li>
+      </ul>
+    </div>
+    <div>
+      <h2>Start with a ${r.name.toLowerCase()} collection</h2>
+      <p>Tell us which collection interests you. We will follow up with final selections, pricing and next steps.</p>
+      <a class="btn btn-primary" href="/get-started/?room=${r.id}">Get started with a ${r.name.toLowerCase()}</a>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap">
+    <h2>Other rooms</h2>
+    <ul class="other-rooms">
+      ${others
+        .map(
+          (o) => `<li><a href="/collections/${o.id}/">${swatches(o.packages.select.palette)}<span>${o.name}</span></a></li>`
+        )
+        .join('')}
+    </ul>
+  </div>
+</section>`,
+  };
+}
+
+export default function () {
+  return [overview(), ...rooms.map(roomPage)];
+}
